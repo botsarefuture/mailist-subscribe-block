@@ -1,0 +1,23 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "create-block/mailist-subscribe-block",
+  "version": "0.1.0",
+  "title": "Mailist Subscribe Block",
+  "category": "widgets",
+  "description": "A block to subscribe users to a Mailist email list.",
+  "supports": {
+    "html": false
+  },
+  "textdomain": "mailist-subscribe-block",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php",
+  "attributes": {
+    "listId": {
+      "type": "string",
+      "default": "67617934a04a83ee026352d3"
+    }
+  }
+}

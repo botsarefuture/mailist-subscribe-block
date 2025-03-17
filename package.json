@@ -1,0 +1,23 @@
+{
+	"name": "mailist-subscribe-block",
+	"version": "0.2.0",
+	"description": "A simple block to subscribe to a mail list managed by Mailist.",
+	"author": "LuovaClub",
+	"license": "GPL-2.0-or-later",
+	"main": "build/index.js",
+	"scripts": {
+		"build": "wp-scripts build --webpack-copy-php && cp src/mailist-subscribe-block/style-index.css build/mailist-subscribe-block/style-index.css",
+		"format": "wp-scripts format",
+		"lint:css": "wp-scripts lint-style",
+		"lint:js": "wp-scripts lint-js",
+		"packages-update": "wp-scripts packages-update",
+		"plugin-zip": "wp-scripts plugin-zip",
+		"start": "wp-scripts start --webpack-copy-php",
+		"build-assets": "wp-scripts build-style && wp-scripts build",
+		"dev-assets": "wp-scripts start --webpack-copy-php --watch",
+		"fin": "wp-scripts build --webpack-copy-php && cp src/mailist-subscribe-block/style-index.css build/mailist-subscribe-block/style-index.css && wp-scripts plugin-zip"
+	},
+	"devDependencies": {
+		"@wordpress/scripts": "^30.12.0"
+	}
+}
