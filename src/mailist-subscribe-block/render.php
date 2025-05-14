@@ -4,89 +4,92 @@
  */
 $button_color = isset( $attributes['button_color'] ) ? esc_attr( $attributes['button_color'] ) : '#38ff00';
 $font_size = isset( $attributes['font_size'] ) ? intval( $attributes['font_size'] ) : 16;
-$label_email = isset( $attributes['label_email'] ) ? esc_html( $attributes['label_email'] ) : 'Email:';
-$label_button = isset( $attributes['label_button'] ) ? esc_html( $attributes['label_button'] ) : 'Subscribe';
-$label_consent = isset( $attributes['label_consent'] ) ? esc_html( $attributes['label_consent'] ) : 'I consent to having my email stored and used to receive updates. See our ';
+$label_email = isset( $attributes['label_email'] ) ? esc_html( $attributes['label_email'] ) : esc_html__( 'Email:', 'mailist-subscribe-block' );
+$label_button = isset( $attributes['label_button'] ) ? esc_html( $attributes['label_button'] ) : esc_html__( 'Subscribe', 'mailist-subscribe-block' );
+$label_consent = isset( $attributes['label_consent'] ) ? esc_html( $attributes['label_consent'] ) : esc_html__( 'I consent to having my email stored and used to receive updates. See our ', 'mailist-subscribe-block' );
+$privacy_policy_url = isset( $attributes['privacy_policy_url'] ) ? esc_url( $attributes['privacy_policy_url'] ) : '/privacy-policy';
+$label_privacy_link = isset( $attributes['label_privacy_link'] ) ? esc_html( $attributes['label_privacy_link'] ) : esc_html__( 'Privacy Policy', 'mailist-subscribe-block' );
+$label_success = isset( $attributes['label_success'] ) ? esc_html( $attributes['label_success'] ) : esc_html__( 'Subscription successful!', 'mailist-subscribe-block' );
+$label_error = isset( $attributes['label_error'] ) ? esc_html( $attributes['label_error'] ) : esc_html__( 'An error occurred. Please try again.', 'mailist-subscribe-block' );
+$label_already = isset( $attributes['label_already'] ) ? esc_html( $attributes['label_already'] ) : esc_html__( 'This user might have already subscribed', 'mailist-subscribe-block' );
 ?>
 <div <?php echo get_block_wrapper_attributes(); ?>>
     <!-- Subscription Form -->
-    <form onsubmit="subscribe(event)" style="font-size: <?php echo $font_size; ?>px;">
+    <form onsubmit="return subscribe(event);" style="font-size: <?php echo $font_size; ?>px;">
         <label for="email"><?php echo $label_email; ?></label>
         <input type="email" id="email" name="email" required>
         <br><br>
         <label for="gdpr-consent" style="display: flex; align-items: center; font-size: 0.95em;">
             <input type="checkbox" id="gdpr-consent" name="gdpr_consent" required style="margin-right: 0.5em;">
-            <?php echo $label_consent; ?><a href="/privacy-policy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.
+            <?php echo $label_consent; ?><a href="<?php echo $privacy_policy_url; ?>" target="_blank" rel="noopener noreferrer"><?php echo $label_privacy_link; ?></a>.
         </label>
         <br>
-        <button type="submit" style="background-color: <?php echo $button_color; ?>;">
+        <button type="submit" id="mailist-submit-btn" style="background-color: <?php echo $button_color; ?>;">
             <?php echo $label_button; ?>
         </button>
+        <div id="mailist-notification" class="mailist-notification" style="margin-top:1em;"></div>
     </form>
 </div>
 
 <script>
-    function subscribe(event) {
-        // Prevent form submission
-        event.preventDefault();
-
-        const email = document.getElementById("email").value;
-        const consent = document.getElementById("gdpr-consent").checked;
-        if (!consent) {
-            showAlert("You must consent to data storage to subscribe.", "error");
-            return;
+/**
+ * Handles the subscribe form submission.
+ *
+ * Parameters
+ * ----------
+ * event : Event
+ *     The form submit event.
+ *
+ * Returns
+ * -------
+ * false
+ *     Always returns false to prevent default form submission.
+ */
+function subscribe(event) {
+    event.preventDefault();
+    var form = event.target;
+    var email = form.querySelector('#email').value;
+    var consent = form.querySelector('#gdpr-consent').checked;
+    var listId = "<?php echo esc_html( $attributes['listId'] ); ?>";
+    var btn = form.querySelector('#mailist-submit-btn');
+    var notification = form.querySelector('#mailist-notification');
+    if (!consent) {
+        notification.textContent = <?php echo json_encode($label_error); ?>;
+        notification.className = 'mailist-notification error';
+        return false;
+    }
+    btn.disabled = true;
+    btn.textContent = 'Subscribing...';
+    notification.textContent = '';
+    notification.className = 'mailist-notification';
+    fetch('https://mailist.luova.club/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email, list_id: listId, gdpr_consent: consent })
+    })
+    .then(function(response) { return response.json(); })
+    .then(function(data) {
+        if (data.success) {
+            notification.textContent = <?php echo json_encode($label_success); ?>;
+            notification.className = 'mailist-notification success';
+        } else if (data.status === 409 || data.code === 409) {
+            notification.textContent = <?php echo json_encode($label_already); ?>;
+            notification.className = 'mailist-notification error';
+        } else {
+            notification.textContent = (data.message && typeof data.message === 'string') ? data.message : <?php echo json_encode($label_error); ?>;
+            notification.className = 'mailist-notification error';
         }
-        const listId = "<?php echo esc_html( $attributes['listId'] ); ?>"; // Replace with actual list_id
-
-        // Adding a loading state to show while the request is being processed
-        const button = document.querySelector("button");
-        button.innerHTML = "Subscribing..."; // Change button text
-        button.disabled = true; // Disable the button to prevent multiple submissions
-
-        fetch('https://mailist.luova.club/signup', {
-            method: "POST",
-            headers: {
-                'Content-Type': "application/json"
-            },
-            body: JSON.stringify({
-                email: email,
-                list_id: listId,
-                gdpr_consent: consent
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            // Handle the response for success or failure
-            if (!data.error) {
-                showAlert("Subscription successful!", "success");
-            } else {
-                showAlert(`Subscription failed: ${data.message}`, "error");
-            }
-        })
-        .catch(error => {
-            console.error("Error:", error);
-            showAlert("An error occurred. Please try again.", "error");
-        })
-        .finally(() => {
-            // Re-enable the button after the request is complete
-            button.innerHTML = "Subscribe";
-            button.disabled = false;
-        });
-    }
-
-    function showAlert(message, type) {
-        const alertContainer = document.createElement("div");
-        alertContainer.classList.add("alert", type);
-        alertContainer.innerText = message;
-
-        // Add the alert to the body and then remove it after 5 seconds
-        document.body.appendChild(alertContainer);
-
-        setTimeout(() => {
-            alertContainer.classList.add("fade-out");
-            setTimeout(() => alertContainer.remove(), 500);
-        }, 5000);
-    }
+    })
+    .catch(function() {
+        notification.textContent = <?php echo json_encode($label_error); ?>;
+        notification.className = 'mailist-notification error';
+    })
+    .finally(function() {
+        btn.disabled = false;
+        btn.textContent = <?php echo json_encode($label_button); ?>;
+    });
+    return false;
+}
 </script>
 
 <style>
@@ -130,6 +133,27 @@ $label_consent = isset( $attributes['label_consent'] ) ? esc_html( $attributes['
 
     button:disabled {
         background-color: #ccc;
+    }
+
+    .mailist-notification {
+        margin-top: 1em;
+        font-size: 1em;
+        padding: 0.75em 1em;
+        border-radius: 4px;
+        background: #f8f9fa;
+        color: #333;
+        border: 1px solid #e0e0e0;
+        min-height: 1.5em;
+    }
+    .mailist-notification.success {
+        background: #d4edda;
+        color: #155724;
+        border-color: #c3e6cb;
+    }
+    .mailist-notification.error {
+        background: #f8d7da;
+        color: #721c24;
+        border-color: #f5c6cb;
     }
 </style>
 

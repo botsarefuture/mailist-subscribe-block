@@ -1,0 +1,59 @@
+msgid "Email:"
+msgstr "Sähköposti:"
+
+msgid "Subscribe"
+msgstr "Tilaa"
+
+msgid "I consent to having my email stored and used to receive updates. See our "
+msgstr "Hyväksyn, että sähköpostiosoitteeni tallennetaan ja sitä käytetään päivitysten lähettämiseen. Katso "
+
+msgid "Privacy Policy"
+msgstr "Tietosuojaseloste"
+
+msgid "Subscription successful!"
+msgstr "Tilauksen rekisteröinti onnistui!"
+
+msgid "An error occurred. Please try again."
+msgstr "Tapahtui virhe. Yritä uudelleen."
+
+msgid "Settings"
+msgstr "Asetukset"
+
+msgid "List ID"
+msgstr "Listan tunniste"
+
+msgid "Email Label"
+msgstr "Sähköpostikentän teksti"
+
+msgid "Button Text"
+msgstr "Painikkeen teksti"
+
+msgid "Consent Text"
+msgstr "Suostumusteksti"
+
+msgid "Privacy Policy URL"
+msgstr "Tietosuojaselosteen URL"
+
+msgid "Privacy Link Text"
+msgstr "Tietosuojaselostelinkin teksti"
+
+msgid "Success Message"
+msgstr "Onnistumisviesti"
+
+msgid "Error Message"
+msgstr "Virheviesti"
+
+msgid "Appearance"
+msgstr "Ulkoasu"
+
+msgid "Button Color"
+msgstr "Painikkeen väri"
+
+msgid "Font Size"
+msgstr "Fonttikoko"
+
+msgid "Subscribing..."
+msgstr "Tilataan..."
+
+msgid "This user might have already subscribed"
+msgstr "Tämä käyttäjä on saattanut jo tilata uutiskirjeen"

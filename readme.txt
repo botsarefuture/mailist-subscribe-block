@@ -45,6 +45,15 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 
 == Changelog ==
 
+= 1.0.0 =
+* Major update: Full customization of all field names (underscore style), appearance, and all user-facing text.
+* GDPR consent and privacy policy link are fully customizable.
+* Multilingual support (Finnish and English provided).
+* Success, error, and already-subscribed notifications are shown below the form with clear color cues.
+* Mobile responsive and accessible.
+* Numpydoc format for all docstrings.
+* Ready for public launch.
+
 = 0.2.0 =
 * Updated stable tag and dependencies to match codebase changes.
 

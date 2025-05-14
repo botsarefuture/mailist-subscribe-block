@@ -5,7 +5,7 @@
  * Category:          widgets
  * Icon:              email
  * Keywords:          mailist, subscribe, email, newsletter
- * Version:           0.2.0
+ * Version:           1.0.0
  * Requires at least: 6.7
  * Requires PHP:      7.4
  * Author:            LuovaClub
@@ -21,11 +21,37 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
+ * Load plugin textdomain for translations.
+ *
+ * Returns
+ * -------
+ * void
+ */
+function mailist_subscribe_block_load_textdomain() {
+	load_plugin_textdomain( 'mailist-subscribe-block', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+}
+add_action( 'init', 'mailist_subscribe_block_load_textdomain' );
+
+/**
  * Registers the block using the metadata loaded from the `block.json` file.
  * Behind the scenes, it registers also all assets so they can be enqueued
  * through the block editor in the corresponding context.
  *
- * @see https://developer.wordpress.org/reference/functions/register_block_type/
+ * Parameters
+ * ----------
+ * None
+ *
+ * Returns
+ * -------
+ * void
+ *
+ * Notes
+ * -----
+ * The privacy_policy_url attribute should be set in the block attributes and used in the frontend render.
+ *
+ * See Also
+ * --------
+ * https://developer.wordpress.org/reference/functions/register_block_type/
  */
 function create_block_mailist_subscribe_block_block_init() {
 	register_block_type( __DIR__ . '/build/mailist-subscribe-block' );

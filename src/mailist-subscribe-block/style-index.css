@@ -41,6 +41,23 @@
         background-color: #32e600;
 }
 
+/* Notification Styles */
+.mailist-notification.success {
+    background: #d4edda;
+    color: #155724;
+    border-color: #38ff00;
+}
+.mailist-notification.error {
+    background: #f8d7da;
+    color: #721c24;
+    border-color: #e60023;
+}
+.mailist-notification.warning {
+    background: #fff3cd;
+    color: #856404;
+    border-color: #ffe066;
+}
+
 /* Responsive styles for mobile devices */
 @media (max-width: 600px) {
     .wp-block-create-block-mailist-subscribe-block {

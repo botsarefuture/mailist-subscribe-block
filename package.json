@@ -1,6 +1,6 @@
 {
 	"name": "mailist-subscribe-block",
-	"version": "0.3.0",
+	"version": "1.0.0",
 	"description": "A simple block to subscribe to a mail list managed by Mailist.",
 	"author": "LuovaClub",
 	"license": "GPL-2.0-or-later",

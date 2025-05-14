@@ -1,0 +1,56 @@
+msgid "Email:"
+msgstr ""
+
+msgid "Subscribe"
+msgstr ""
+
+msgid "I consent to having my email stored and used to receive updates. See our "
+msgstr ""
+
+msgid "Privacy Policy"
+msgstr ""
+
+msgid "Subscription successful!"
+msgstr ""
+
+msgid "An error occurred. Please try again."
+msgstr ""
+
+msgid "Settings"
+msgstr ""
+
+msgid "List ID"
+msgstr ""
+
+msgid "Email Label"
+msgstr ""
+
+msgid "Button Text"
+msgstr ""
+
+msgid "Consent Text"
+msgstr ""
+
+msgid "Privacy Policy URL"
+msgstr ""
+
+msgid "Privacy Link Text"
+msgstr ""
+
+msgid "Success Message"
+msgstr ""
+
+msgid "Error Message"
+msgstr ""
+
+msgid "Appearance"
+msgstr ""
+
+msgid "Button Color"
+msgstr ""
+
+msgid "Font Size"
+msgstr ""
+
+msgid "Subscribing..."
+msgstr ""
