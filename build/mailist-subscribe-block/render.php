@@ -2,14 +2,26 @@
 /**
  * @see https://github.com/WordPress/gutenberg/blob/trunk/docs/reference-guides/block-api/block-metadata.md#render
  */
+$button_color = isset( $attributes['button_color'] ) ? esc_attr( $attributes['button_color'] ) : '#38ff00';
+$font_size = isset( $attributes['font_size'] ) ? intval( $attributes['font_size'] ) : 16;
+$label_email = isset( $attributes['label_email'] ) ? esc_html( $attributes['label_email'] ) : 'Email:';
+$label_button = isset( $attributes['label_button'] ) ? esc_html( $attributes['label_button'] ) : 'Subscribe';
+$label_consent = isset( $attributes['label_consent'] ) ? esc_html( $attributes['label_consent'] ) : 'I consent to having my email stored and used to receive updates. See our ';
 ?>
 <div <?php echo get_block_wrapper_attributes(); ?>>
     <!-- Subscription Form -->
-    <form onsubmit="subscribe(event)">
-        <label for="email">Email:</label>
+    <form onsubmit="subscribe(event)" style="font-size: <?php echo $font_size; ?>px;">
+        <label for="email"><?php echo $label_email; ?></label>
         <input type="email" id="email" name="email" required>
         <br><br>
-        <button type="submit">Subscribe</button>
+        <label for="gdpr-consent" style="display: flex; align-items: center; font-size: 0.95em;">
+            <input type="checkbox" id="gdpr-consent" name="gdpr_consent" required style="margin-right: 0.5em;">
+            <?php echo $label_consent; ?><a href="/privacy-policy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.
+        </label>
+        <br>
+        <button type="submit" style="background-color: <?php echo $button_color; ?>;">
+            <?php echo $label_button; ?>
+        </button>
     </form>
 </div>
 
@@ -19,6 +31,11 @@
         event.preventDefault();
 
         const email = document.getElementById("email").value;
+        const consent = document.getElementById("gdpr-consent").checked;
+        if (!consent) {
+            showAlert("You must consent to data storage to subscribe.", "error");
+            return;
+        }
         const listId = "<?php echo esc_html( $attributes['listId'] ); ?>"; // Replace with actual list_id
 
         // Adding a loading state to show while the request is being processed
@@ -33,7 +50,8 @@
             },
             body: JSON.stringify({
                 email: email,
-                list_id: listId
+                list_id: listId,
+                gdpr_consent: consent
             })
         })
         .then(response => response.json())

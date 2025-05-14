@@ -2,7 +2,7 @@
 Contributors:      LuovaClub
 Tags:              block
 Tested up to:      6.7
-Stable tag:        0.1.0
+Stable tag:        0.2.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -10,7 +10,7 @@ Example block scaffolded with Create Block tool.
 
 == Description ==
 
-This is the long description. No limit, and you can use Markdown (as well as in the following sections).
+This block is mobile-friendly and GDPR compliant. It includes a required consent checkbox and a link to your Privacy Policy. The form layout adapts to mobile devices for optimal usability.
 
 For backwards compatibility, if this section is missing, the full length of the short description will be used, and
 Markdown parsed.
@@ -44,6 +44,9 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 2. This is the second screen shot
 
 == Changelog ==
+
+= 0.2.0 =
+* Updated stable tag and dependencies to match codebase changes.
 
 = 0.1.0 =
 * Release

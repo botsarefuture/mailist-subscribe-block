@@ -1,27 +1,74 @@
-/* General styling for the subscribe block */
+/*--------------------------------------------------------------
+    Mailist Subscribe Block Styles
+    This section defines the overall block styling.
+--------------------------------------------------------------*/
 .wp-block-create-block-mailist-subscribe-block {
-    background: rgba(0, 0, 0, 0.29);
-    padding: 20px;
+        background-color: rgba(0, 0, 0, 0.29);
+        padding: 20px;
 }
 
-/* Styling for the email input field */
-#email {
-    width: 100%;
-    padding: 1rem;
-    border-radius: 5px;
-    border: none;
-    max-width: -moz-available;
-    max-width: --webkit-fill-available;
-    max-width: fill-available;
-
+/*--------------------------------------------------------------
+    Email Input Field Style
+    Ensures the email input spans the full width with proper styling.
+--------------------------------------------------------------*/
+.wp-block-create-block-mailist-subscribe-block #email {
+        width: 100%;
+        padding: 1rem;
+        border: none;
+        border-radius: 5px;
+        max-width: -moz-available;
+        max-width: -webkit-fill-available;
+        max-width: fill-available;
 }
 
-/* Styling for the subscribe button */
+/*--------------------------------------------------------------
+    Subscribe Button Style
+    Provides a clear and modern look for the subscribe button.
+--------------------------------------------------------------*/
 .wp-block-create-block-mailist-subscribe-block form button {
-    width: 100%;
-    max-width: 100%;
-    background: #38ff00;
-    padding: 1rem;
-    border: none;
-    border-radius: 0.5rem;
+        width: 100%;
+        max-width: 100%;
+        background-color: #38ff00;
+        padding: 1rem;
+        border: none;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+}
+
+/* Optional Hover State for the Button */
+.wp-block-create-block-mailist-subscribe-block form button:hover {
+        background-color: #32e600;
+}
+
+/* Responsive styles for mobile devices */
+@media (max-width: 600px) {
+    .wp-block-create-block-mailist-subscribe-block {
+        padding: 10px;
+        font-size: 1em;
+    }
+    .wp-block-create-block-mailist-subscribe-block form {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75em;
+    }
+    .wp-block-create-block-mailist-subscribe-block label,
+    .wp-block-create-block-mailist-subscribe-block input,
+    .wp-block-create-block-mailist-subscribe-block button {
+        font-size: 1em;
+    }
+    .wp-block-create-block-mailist-subscribe-block #email,
+    .wp-block-create-block-mailist-subscribe-block form button {
+        padding: 0.85em;
+    }
+    .wp-block-create-block-mailist-subscribe-block label[for="gdpr-consent"] {
+        font-size: 0.95em;
+        line-height: 1.4;
+    }
+}
+
+/* Improve tap target size for checkboxes */
+.wp-block-create-block-mailist-subscribe-block input[type="checkbox"] {
+    width: 1.2em;
+    height: 1.2em;
 }
